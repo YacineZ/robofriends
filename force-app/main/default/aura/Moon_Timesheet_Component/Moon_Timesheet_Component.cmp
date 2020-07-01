@@ -1,0 +1,280 @@
+<aura:component controller="Moon_TimesheetsContainer_LC"  >
+
+
+<!-- Coming from parent Moon_Timesheets_Container -->
+<aura:attribute name="timesheetWrapper" type="Moon_TimesheetsContainer_LC.TimeSheetsDetailsWrapper"   />
+<aura:attribute  name="sCurrentWeek" type="String"  />
+<aura:attribute name="arrDaysDates" type="Object"   />
+
+<!-- Coming from parent Moon_Timesheets_Container -->
+<aura:attribute  name="state" type="String" default="VIEW"  />
+<aura:attribute name="lAssignements" type="Object[]"   />
+<aura:attribute name="lDeletedAssignementsIds" type="String[]"   />
+<aura:attribute name="lTSEntries" type="TimesheetEntry__c[]"   />
+<aura:attribute name="oTSController" type="Object"    />
+<aura:attribute name="isExternal" type="Boolean" default="true"   />
+<aura:attribute name="isInternal" type="Boolean" default="false"   />
+<aura:attribute name="onGoing" type="Boolean" default="false"   />
+
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+<aura:handler name="change" value="{!v.timesheetWrapper}" action="{!c.doInit}"/>
+<aura:handler name="change" value="{!v.sCurrentWeek}" action="{!c.onWeekChange}"/>
+<aura:registerEvent name="appEvent" type="c:Moon_Timesheet_AddRowEvent"/>
+
+
+<aura:if isTrue="{!v.state=='ADDROW'}" >
+  <div class="addRow-panel" >
+    <div class="addRow-container">
+      <div class="addRow-topLine">
+          <lightning:icon class="addRow-icon clickable"  iconName="utility:close" size="x-small" onclick="{!c.toggleAddRow}" />  
+          SÉLECTIONNER LE PROJET
+      </div>
+      <div class="addRow-typeLine" >
+        <div class="addRow-Type">        
+          <ui:inputCheckbox class="typebox" value="{!v.isExternal}"  aura:id="checkDelivery" change="{!c.setExternal}" /> <!-- value="{!v.myBool}" -->
+          <div class="addRow-label">
+            Delivery
+          </div>
+        </div>
+
+        <div class="addRow-Type">        
+          <ui:inputCheckbox class="typebox" value="{!v.isInternal}" aura:id="checkInternal" change="{!c.setInternal}" /> <!-- value="{!v.myBool}" -->
+          <div class="addRow-label">
+            INTERNAL
+          </div>
+        </div>
+      </div>
+
+    <!--    onsectiontoggle="{! c.handleSectionToggle }" -->
+    <!-- activeSectionName="{! v.activeSections }" -->
+    <aura:iteration var="oAssignement" items="{!v.lAssignements}"  >
+      <lightning:accordion
+        allowMultipleSectionsOpen="true"
+      > 
+        <lightning:accordionSection name="A" label="{!oAssignement.projectName}">
+            <aura:set attribute="body">
+              <ul class="addRow-menu">
+                <aura:iteration var="stage" items="{!oAssignement.stages}"  >
+                  <li>
+                    <a class="addRow-menuLink" data-assignement="{!stage.Id}" data-project="{!stage.ProjectStage__r.Name}" onclick="{!c.addRow}"> {!stage.ProjectStage__r.Name} </a>
+                  </li>
+                </aura:iteration>  
+              </ul>
+            </aura:set>
+        </lightning:accordionSection>
+      </lightning:accordion>
+    </aura:iteration>
+
+    </div>
+  </div>
+  <aura:set  attribute="else"  >
+    <div class="ts-component-container">
+
+      <div class="header-line component-line slds-grid">
+        <div class="first-cell line-cell slds-col slds-size_4-of-12 displayDesktopOnly" />
+        <div class="calendar-cell line-cell slds-size_1-of-12 displayDesktopOnly" >
+          <lightning:icon class="right-arrow-icon"  iconName="utility:date_input" size="x-small" alternativeText="Indicates next"/>  
+        </div> 
+        <div class="time-cell line-cell slds-col slds-size_1-of-6  slds-medium-size--1-of-12  " /> 
+        <div class="date-cell line-cell slds-col slds-size_1-of-6  slds-medium-size--1-of-12 " >
+          MON-{!v.arrDaysDates.MondayDate}
+        </div> 
+        <div class="date-cell line-cell slds-col slds-size_1-of-6  slds-medium-size--1-of-12 " >
+          TUE-{!v.arrDaysDates.TuesdayDate}
+        </div> 
+        <div class="date-cell line-cell slds-col slds-size_1-of-6  slds-medium-size--1-of-12  " >
+          WED-{!v.arrDaysDates.WednesdayDate}
+        </div> 
+        <div class="date-cell line-cell slds-col slds-size_1-of-6  slds-medium-size--1-of-12  " >
+          THU-{!v.arrDaysDates.ThursdayDate}
+        </div> 
+        <div class="date-cell line-cell slds-col slds-size_1-of-6  slds-medium-size--1-of-12 " >
+          FRI-{!v.arrDaysDates.FridayDate}
+        </div>     
+        <div class="total-cell line-cell slds-col slds-size_1-of-6  slds-medium-size--1-of-12 displayDesktopOnly " >
+          DAYS
+        </div> 
+      </div>
+
+      <div class="timesheet-lines">
+        <aura:iteration var="oTimesheet" items="{!v.lTSEntries}"  >
+          <div class="timesheet-line component-line slds-grid slds-wrap slds-grid--vertical-stretch ">
+            <div class="first-cell line-cell background-color-gray slds-col slds-size_1-of-1  slds-medium-size--4-of-12 "  >
+              <aura:if isTrue="{!oTimesheet.Status__c!='Accepted'}"  >
+                <div class="{!concat('close-container ',if(oTimesheet.Status__c=='Accepted','close-container-hidden','') )}"  data-assignement="{!oTimesheet.ExternalId__c}"  
+                  onclick="{!c.removeAssignement}" />              
+                <aura:set  attribute="else"  >
+                  <div style="width : 16px"  data-assignement="{!oTimesheet.ExternalId__c}" />                  
+                </aura:set>
+              </aura:if>
+
+              <div class="project-label-container" >
+                <div class="project-label"> 
+                  {!oTimesheet.Assignment__r.ProjectStage__r.Name}
+                </div>
+                <div class="project-status">
+                  Status:{!if( oTimesheet.Status__c == null || oTimesheet.Status__c=='','Draft',oTimesheet.Status__c ) }
+                </div>
+              </div>
+
+            </div>
+            <div class="calendar-cell line-cell slds-grid slds-grid--vertical-stretch  slds-col  slds-size_1-of-2  slds-medium-size--1-of-12 nopadding bottom-margin" >
+              <div class="checkbox-calendar background-color-gray displayMobileOnly slds-size_1-of-6 slds-medium-size--1-of-1 cell-padding" >
+                <lightning:icon class="right-arrow-icon"  iconName="utility:date_input" size="x-small" alternativeText="Indicates next"/>  
+              </div>
+              <div class="checkbox-container background-color-gray slds-size_1-of-6 slds-medium-size--1-of-1 cell-padding">
+                <input data-assignement="{!oTimesheet.ExternalId__c}"  type="checkbox" name="CheckAll" onclick="{!c.fillEmptyRow}"  />
+              </div>
+            </div> 
+            <div class="displayMobileOnly total-tsline-container line-cell slds-grid slds-grid--vertical-stretch  slds-col  slds-size_1-of-2  slds-medium-size--1-of-12 bottom-margin" >
+              <div class="total-label background-color-gray displayMobileOnly slds-size_2-of-6 slds-medium-size--1-of-1 cell-padding" >
+                <div>
+                DAYS TOTAL
+                </div>
+              </div>
+              <div class="total-days  slds-size_1-of-6 slds-medium-size--1-of-1 cell-padding">
+                <div>
+                {!oTimesheet.MondayAM__c + oTimesheet.MondayPM__c + oTimesheet.TuesdayAM__c + oTimesheet.TuesdayPM__c + oTimesheet.WednesdayAM__c 
+                  + oTimesheet.WednesdayPM__c+ oTimesheet.ThursdayAM__c + oTimesheet.ThursdayPM__c + oTimesheet.FridayAM__c + oTimesheet.FridayPM__c }    
+                  </div>            
+              </div>
+            </div> 
+            <div class="time-cell line-cell slds-col slds-size_1-of-6  slds-medium-size--1-of-12 " >
+              <div class="first-row first-column nested-cell">
+                AM
+              </div>
+              <div class="first-column nested-cell">
+                PM
+              </div>
+            </div>  
+            <div class="date-cell line-cell slds-col  slds-size_1-of-6  slds-medium-size--1-of-12 " >
+               <div data-field="MondayAM__c" data-assignement="{!oTimesheet.ExternalId__c}" class="{!concat('nested-cell first-row ',if(greaterthan(oTimesheet.MondayAM__c,0),'selected-cell' , if(greaterthan(v.oTSController.MondayAM__c,0),'unavailable-cell','line-cell') ) )}"  onclick="{!c.toggleCell}" />
+               <div data-field="MondayPM__c" data-assignement="{!oTimesheet.ExternalId__c}" class="{!concat('nested-cell ',if(greaterthan(oTimesheet.MondayPM__c,0),'selected-cell' , if(greaterthan(v.oTSController.MondayPM__c,0),'unavailable-cell','line-cell') ) )}" onclick="{!c.toggleCell}" />  
+            </div> 
+            <div class="date-cell line-cell slds-col  slds-size_1-of-6  slds-medium-size--1-of-12 " >
+               <div data-field="TuesdayAM__c" data-assignement="{!oTimesheet.ExternalId__c}" class="{!concat('nested-cell first-row ',if(greaterthan(oTimesheet.TuesdayAM__c,0),'selected-cell' , if(greaterthan(v.oTSController.TuesdayAM__c,0),'unavailable-cell','line-cell') ) )}"  onclick="{!c.toggleCell}" />
+               <div data-field="TuesdayPM__c" data-assignement="{!oTimesheet.ExternalId__c}"   class="{!concat('nested-cell ',if(greaterthan(oTimesheet.TuesdayPM__c,0),'selected-cell' , if(greaterthan(v.oTSController.TuesdayPM__c,0),'unavailable-cell','line-cell') ) )}"   onclick="{!c.toggleCell}" />  
+            </div> 
+            <div class="date-cell line-cell slds-col  slds-size_1-of-6  slds-medium-size--1-of-12 " >
+               <div data-field="WednesdayAM__c" data-assignement="{!oTimesheet.ExternalId__c}" class="{!concat('nested-cell first-row ',if(greaterthan(oTimesheet.WednesdayAM__c,0),'selected-cell' , if(greaterthan(v.oTSController.WednesdayAM__c,0),'unavailable-cell','line-cell') ) )}"  onclick="{!c.toggleCell}" />
+               <div data-field="WednesdayPM__c" data-assignement="{!oTimesheet.ExternalId__c}" class="{!concat('nested-cell  ',if(greaterthan(oTimesheet.WednesdayPM__c,0),'selected-cell' , if(greaterthan(v.oTSController.WednesdayPM__c,0),'unavailable-cell','line-cell') ) )}" onclick="{!c.toggleCell}" />    
+            </div> 
+            <div class="date-cell line-cell slds-col  slds-size_1-of-6  slds-medium-size--1-of-12 " >
+               <div data-field="ThursdayAM__c" data-assignement="{!oTimesheet.ExternalId__c}" class="{!concat('nested-cell first-row ',if(greaterthan(oTimesheet.ThursdayAM__c,0),'selected-cell' , if(greaterthan(v.oTSController.ThursdayAM__c,0),'unavailable-cell','line-cell') ) )}"  onclick="{!c.toggleCell}" />
+               <div data-field="ThursdayPM__c" data-assignement="{!oTimesheet.ExternalId__c}" class="{!concat('nested-cell ',if(greaterthan(oTimesheet.ThursdayPM__c,0),'selected-cell' , if(greaterthan(v.oTSController.ThursdayPM__c,0),'unavailable-cell','line-cell') ) )}"  onclick="{!c.toggleCell}" />       
+            </div> 
+            <div class="date-cell line-cell slds-col  slds-size_1-of-6  slds-medium-size--1-of-12 " >
+               <div data-field="FridayAM__c" data-assignement="{!oTimesheet.ExternalId__c}" class="{!concat('nested-cell first-row ',if(greaterthan(oTimesheet.FridayAM__c,0),'selected-cell' , if(greaterthan(v.oTSController.FridayAM__c,0),'unavailable-cell','line-cell') ) )}" onclick="{!c.toggleCell}"/>
+               <div data-field="FridayPM__c" data-assignement="{!oTimesheet.ExternalId__c}" class="{!concat('nested-cell ',if(greaterthan(oTimesheet.FridayPM__c,0),'selected-cell' , if(greaterthan(v.oTSController.FridayPM__c,0),'unavailable-cell','line-cell') ) )}" onclick="{!c.toggleCell}" />      
+            </div>     
+            <div class="total-cell background-color-gray line-cell slds-size_1-of-12 displayDesktopOnly cell-padding" >
+              <div>
+                {!oTimesheet.MondayAM__c + oTimesheet.MondayPM__c + oTimesheet.TuesdayAM__c + oTimesheet.TuesdayPM__c + oTimesheet.WednesdayAM__c 
+                  + oTimesheet.WednesdayPM__c+ oTimesheet.ThursdayAM__c + oTimesheet.ThursdayPM__c + oTimesheet.FridayAM__c + oTimesheet.FridayPM__c }
+              </div>
+            </div> 
+          </div>
+        </aura:iteration>
+      </div>
+
+
+      <div class="total-line component-line slds-grid slds-wrap slds-grid--vertical-stretch ">
+        <div class="first-cell line-cell  slds-col slds-size_1-of-1  slds-medium-size--4-of-12  clickable cell-padding bottom-margin"  onclick="{!c.toggleAddRow}">
+          <lightning:icon class="plus-icon"  iconName="utility:add" size="x-small" alternativeText="Add line"/>  
+          <div class="plus-button-label"  >
+            Add a row
+          </div>
+
+        </div>
+        <div class="calendar-cell line-cell slds-size_1-of-12 displayDesktopOnly" >
+          <div class="checkbox-container  ">
+            <div> Total </div>
+          </div>
+        </div> 
+        <div class="time-cell line-cell slds-size_1-of-6  slds-medium-size--1-of-12 " >
+          <div class="first-row first-column nested-cell">
+            AM
+          </div>
+          <div class="first-column nested-cell">
+            PM
+          </div>
+        </div> 
+        <div class="date-cell line-cell slds-size_1-of-6  slds-medium-size--1-of-12 " >
+
+          <div class="{!concat('first-row nested-cell ',if(equals(v.oTSController.MondayAM__c,0.5),'good-cell ',
+                                              if(greaterthan(v.oTSController.MondayAM__c,0.5),'bad-cell ', ''))  
+                                              )}" />
+
+          <div class="{!concat('first-row nested-cell ',if(equals(v.oTSController.MondayPM__c,0.5),'good-cell ',
+                                              if(greaterthan(v.oTSController.MondayPM__c,0.5),'bad-cell ', ''))  
+                                              )}" />  
+        </div> 
+        <div class="date-cell line-cell slds-size_1-of-6  slds-medium-size--1-of-12 " >
+
+          <div class="{!concat('first-row nested-cell ',if(equals(v.oTSController.TuesdayAM__c,0.5),'good-cell ',
+                                              if(greaterthan(v.oTSController.TuesdayAM__c,0.5),'bad-cell ', ''))  
+                                              )}" />
+
+          <div class="{!concat('first-row nested-cell ',if(equals(v.oTSController.TuesdayPM__c,0.5),'good-cell ',
+                                              if(greaterthan(v.oTSController.TuesdayPM__c,0.5),'bad-cell ', ''))  
+                                              )}" />
+        </div> 
+        <div class="date-cell line-cell slds-size_1-of-6  slds-medium-size--1-of-12 " >
+
+          <div class="{!concat('first-row nested-cell ',if(equals(v.oTSController.WednesdayAM__c,0.5),'good-cell ',
+                                              if(greaterthan(v.oTSController.WednesdayAM__c,0.5),'bad-cell ', ''))  
+                                              )}" />
+
+          <div class="{!concat('first-row nested-cell ',if(equals(v.oTSController.WednesdayPM__c,0.5),'good-cell ',
+                                              if(greaterthan(v.oTSController.WednesdayPM__c,0.5),'bad-cell ', ''))  
+                                              )}" />
+        </div> 
+
+        <div class="date-cell line-cell slds-size_1-of-6  slds-medium-size--1-of-12 " >
+          <div class="{!concat('first-row nested-cell ',if(equals(v.oTSController.ThursdayAM__c,0.5),'good-cell ',
+                                              if(greaterthan(v.oTSController.ThursdayAM__c,0.5),'bad-cell ', ''))  
+                                              )}" />
+          <div class="{!concat('first-row nested-cell ',if(equals(v.oTSController.ThursdayPM__c,0.5),'good-cell ',
+                                              if(greaterthan(v.oTSController.ThursdayPM__c,0.5),'bad-cell ', ''))  
+                                              )}" />
+        </div> 
+        <div class="date-cell line-cell slds-size_1-of-6  slds-medium-size--1-of-12 " >
+
+
+          <div class="{!concat('first-row nested-cell ',if(equals(v.oTSController.FridayAM__c,0.5),'good-cell ',
+                                              if(greaterthan(v.oTSController.FridayAM__c,0.5),'bad-cell ', ''))  
+                                              )}" />
+          <div class="{!concat('first-row nested-cell ',if(equals(v.oTSController.FridayPM__c,0.5),'good-cell ',
+                                              if(greaterthan(v.oTSController.FridayPM__c,0.5),'bad-cell ', ''))  
+                                              )}" />
+
+        </div>     
+        <div class="total-cell line-cell slds-size_1-of-1  slds-medium-size--1-of-12 cell-padding " >
+          <div>
+            <span class="displayMobileOnly">
+              Total :
+            </span>
+                {!v.oTSController.MondayAM__c + v.oTSController.MondayPM__c + v.oTSController.TuesdayAM__c + v.oTSController.TuesdayPM__c + v.oTSController.WednesdayAM__c 
+                  + v.oTSController.WednesdayPM__c+ v.oTSController.ThursdayAM__c + v.oTSController.ThursdayPM__c + v.oTSController.FridayAM__c + v.oTSController.FridayPM__c }
+          </div>
+        </div> 
+      </div>
+
+      <div class="button-line slds-grid slds-grid_align-end">
+        <button class="available-button" onclick="{!c.copyFromPrevious}">
+          COPY FROM PREVIOUS WEEK
+        </button>
+        <button class="available-button" onclick="{!c.saveTimesheets}">
+          SAVE
+        </button>
+        <button class="{!if((v.oTSController.MondayAM__c + v.oTSController.MondayPM__c + v.oTSController.TuesdayAM__c + v.oTSController.TuesdayPM__c + v.oTSController.WednesdayAM__c 
+                  + v.oTSController.WednesdayPM__c+ v.oTSController.ThursdayAM__c + v.oTSController.ThursdayPM__c + v.oTSController.FridayAM__c + v.oTSController.FridayPM__c) == 5 ,'available-button','unavailable-button')}" 
+                onclick="{!c.saveAndRunApprovalTimesheets}"  >
+          SAVE AND SUBMIT
+        </button>
+      </div>
+    </div>    
+  </aura:set>
+
+</aura:if>
+</aura:component>

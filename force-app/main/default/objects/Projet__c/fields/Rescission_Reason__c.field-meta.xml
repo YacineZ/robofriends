@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rescission_Reason__c</fullName>
+    <externalId>false</externalId>
+    <label>Rescission Reason</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Opportunity Lost</fullName>
+                <default>false</default>
+                <label>Opportunity Lost</label>
+            </value>
+            <value>
+                <fullName>By the customer</fullName>
+                <default>false</default>
+                <label>By the customer</label>
+            </value>
+            <value>
+                <fullName>By Levana</fullName>
+                <default>false</default>
+                <label>By Levana</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

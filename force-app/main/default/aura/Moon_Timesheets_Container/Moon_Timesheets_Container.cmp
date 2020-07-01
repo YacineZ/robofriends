@@ -1,0 +1,43 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="Moon_TimesheetsContainer_LC"  >
+<aura:attribute name="timesheetWrapper" type="Moon_TimesheetsContainer_LC.TimeSheetsDetailsWrapper"   />
+<aura:attribute name="arrDaysDates" type="Object"   />
+<aura:attribute name="sCurrentWeek" type="String"   />
+<aura:attribute name="sWeekNumber" type="String"   />
+<aura:attribute name="sWeekLabel" type="String"   />
+<aura:attribute name="sCurrentYear" type="String"   />
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+<div class="ts-container">
+  <div class="slds-grid ts-header slds-gutters">
+
+    <div class="slds-col slds-size_1-of-3 slds-medium-size--1-of-3 displayDesktopOnly ">
+      <c:Moon_Timesheet_Owner sFullName="{!v.timesheetWrapper.sFullName}" sPhotoURL="{!v.timesheetWrapper.sPhotoURL}" />
+    </div>
+
+    <div class="week-container slds-col slds-size_1-of-1 slds-medium-size--1-of-3">
+      <lightning:icon class="left-arrow-icon clickable" iconName="utility:back" size="medium" alternativeText="Indicates next" 
+         onclick="{!c.previousWeek}" />
+
+      <span class="current-week"> 
+        <span class="current-week_first-line"> Week #{!v.sWeekNumber} - {!v.sCurrentYear}  </span>
+        <span class="current-week_second-line">  from {!v.sWeekLabel}</span>
+      </span>
+
+        <lightning:icon class="right-arrow-icon clickable "  iconName="utility:forward" size="medium" alternativeText="Indicates next"
+            onclick="{!c.nextWeek}" />  
+
+    </div>
+
+    <div class="slds-col slds-size_1-of-1  slds-medium-size--1-of-3  displayDesktopOnly" />
+    <div class="header-bottom-line"  />
+
+  </div> 
+
+  <div class="header-separator" />
+  <div class="ts-component">
+   
+    <c:Moon_Timesheet_Component timesheetWrapper="{!v.timesheetWrapper}" sCurrentWeek="{!v.sCurrentWeek}" arrDaysDates="{!v.arrDaysDates}"/>
+  </div>
+
+</div>
+</aura:component>

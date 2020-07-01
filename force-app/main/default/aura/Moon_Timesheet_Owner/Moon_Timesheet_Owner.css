@@ -1,0 +1,22 @@
+.THIS .profile-picture{
+  width: 56px ; 
+  height: 56px ; 
+  border-radius: 28px;
+  border: 1px solid blue ;
+  margin-right: 30px ; 
+}
+.THIS.ts-header_owner-Container{
+  padding-left : 32px;
+  display: flex ; 
+  height: 100% ; 
+  align-items: center ; 
+
+}
+.THIS.ts-header_owner-Container > * {
+  display: block ; 
+}
+
+.THIS .profile-name{
+  font-size: 18px;
+  font-family: Salesforce Sans; 
+}

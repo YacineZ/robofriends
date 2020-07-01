@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Level__c</fullName>
+    <description>Matches the level of the employees with the custom metadata table &quot;Level Price&quot; to add the average cost price on the project assignements.</description>
+    <externalId>false</externalId>
+    <label>Level</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Junior Consultant</fullName>
+                <default>false</default>
+                <label>Junior Consultant</label>
+            </value>
+            <value>
+                <fullName>Consultant confirmé</fullName>
+                <default>false</default>
+                <label>Consultant confirmé</label>
+            </value>
+            <value>
+                <fullName>Senior Consultant</fullName>
+                <default>false</default>
+                <label>Senior Consultant</label>
+            </value>
+            <value>
+                <fullName>Expert</fullName>
+                <default>false</default>
+                <label>Expert</label>
+            </value>
+            <value>
+                <fullName>Senior Expert</fullName>
+                <default>false</default>
+                <label>Senior Expert</label>
+            </value>
+            <value>
+                <fullName>Project Manager</fullName>
+                <default>false</default>
+                <label>Project Manager</label>
+            </value>
+            <value>
+                <fullName>Senior Project Manager</fullName>
+                <default>false</default>
+                <label>Senior Project Manager</label>
+            </value>
+            <value>
+                <fullName>Director</fullName>
+                <default>false</default>
+                <label>Director</label>
+            </value>
+            <value>
+                <fullName>Partner</fullName>
+                <default>false</default>
+                <label>Partner</label>
+            </value>
+            <value>
+                <fullName>Senior Partner</fullName>
+                <default>false</default>
+                <label>Senior Partner</label>
+            </value>
+            <value>
+                <fullName>Subcontrator</fullName>
+                <default>false</default>
+                <label>Subcontrator</label>
+            </value>
+            <value>
+                <fullName>Support</fullName>
+                <default>false</default>
+                <label>Support</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

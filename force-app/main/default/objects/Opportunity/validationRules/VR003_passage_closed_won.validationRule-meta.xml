@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR003_passage_closed_won</fullName>
+    <active>false</active>
+    <description>Pour passer le stage name de l&#39;opty à closed &amp; won, il faut que le champ &quot;bon de commande requis&quot; soit remplit ainsi que le champ &quot;condition de paiement&quot;.</description>
+    <errorConditionFormula>AND(ISPICKVAL( StageName, &#39;Closed Won&#39;) ,
+ISPICKVAL( BonCommandeRequis__c, &#39;&#39;),
+ISPICKVAL( Conditions_de_paiement__c, &#39;&#39;))</errorConditionFormula>
+    <errorMessage>Pour passer le stage name de l&#39;opty à closed &amp; won, il faut que le champ &quot;bon de commande requis&quot; soit remplit ainsi que le champ &quot;condition de paiement&quot;.</errorMessage>
+</ValidationRule>

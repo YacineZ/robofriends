@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>WeekSum__c</fullName>
+    <externalId>false</externalId>
+    <formula>MondayAM__c + TuesdayAM__c + WednesdayAM__c + ThursdayAM__c + FridayAM__c + MondayPM__c + TuesdayPM__c + WednesdayPM__c + ThursdayPM__c + FridayPM__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Week Sum</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>2</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

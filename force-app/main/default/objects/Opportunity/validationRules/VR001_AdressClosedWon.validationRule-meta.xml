@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR001_AdressClosedWon</fullName>
+    <active>false</active>
+    <description>opportunité : si l&#39;opp est a close won, regle de validation sur l&#39;adresse de facturation du compte associé. L&#39;opp ne peut pas passer a close won si le compte n&#39;a pas d&#39;adresse de facturation</description>
+    <errorConditionFormula>AND( 
+ISPICKVAL(StageName, &#39;Closed Won&#39;), 
+ISBLANK( Account.BillingStreet) 
+)</errorConditionFormula>
+    <errorMessage>Le compte nécessite une adresse de facture pour passer à &quot;closed won&quot;.</errorMessage>
+</ValidationRule>

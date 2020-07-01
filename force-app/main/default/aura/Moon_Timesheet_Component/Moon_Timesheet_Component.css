@@ -1,0 +1,230 @@
+.THIS {}
+
+.THIS .header-line > .calendar-cell,.THIS .checkbox-container{
+  display: flex ; 
+  justify-content: center ; 
+  align-items: center ; 
+}
+.THIS .addRow-icon{
+  margin-right: 15px ; 
+}
+.THIS .close-container{
+  width: 16px ; 
+  height: 16px ;   
+  background-size: contain ;
+  background-repeat: no-repeat;
+  cursor:pointer ; 
+  -webkit-mask-image: url(/resource/Moon_Timesheet_Resources/img/close.svg) ;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat ; 
+  background-color:  black ; 
+}
+
+.THIS .addRow-menu{
+  padding-left: 25px ; 
+}
+.THIS .addRow-menuLink,.THIS .addRow-menuLink:active,.THIS .addRow-menuLink:link,.THIS .addRow-menuLink:focus{
+  color: black ; 
+}
+.THIS.addRow-panel{
+  margin-top: 20px ; 
+  display: flex ; 
+  justify-content: center ; 
+}
+
+.THIS .addRow-container{
+  display: inline-block; 
+  min-width: 315px ;
+
+  border: 1px solid #E5E5E5;
+  box-sizing: border-box;
+}
+.THIS .addRow-topLine{  
+  height: 35px;  
+  background-color: #E5E5E5 ; 
+  line-height: 35px; 
+  padding-left: 12px ; 
+  margin-bottom: 10px ; 
+}
+.THIS .addRow-Type{
+  display: flex ; 
+  margin-right: 40px ; 
+}
+.THIS .typebox{
+  margin-right: 5px ; 
+}
+.THIS .addRow-typeLine{
+  display: flex ; 
+  padding-left: 15px ; 
+}
+
+
+.THIS .checkbox-container{
+  height: 100% ; 
+
+}
+.THIS .line-cell:not(.first-cell){
+  text-align: center ;
+}
+
+.THIS .total-line .checkbox-container,.THIS .total-line .total-cell {
+
+  border : 0.5px solid black;
+}
+.THIS .header-line{
+  margin-bottom: 30px ; 
+}
+.THIS .timesheet-line > .first-cell{
+  display: flex ; 
+  align-items: center ; 
+  padding: 8px ; 
+  margin-bottom: 20px ; 
+}
+.THIS .timesheet-line .calendar-cell{
+  padding: 0px 10px ; 
+}
+
+.THIS .total-line .calendar-cell{
+  padding-left: 10px ; 
+}
+
+.THIS .button-line {
+  margin-top: 30px ; 
+}
+.THIS .button-line button{
+  background-color: none; 
+  border : none ; 
+  font-size: 12px ; 
+}
+.THIS .button-line button:active,.THIS .button-line button:visited,.THIS .button-line button:focus,.THIS .button-line button:hover,.THIS .button-line button:link{
+  border: none ; 
+  box-shadow: none ; 
+}
+.THIS .button-line button{
+  border : none ; 
+  font-size: 12px ; 
+  margin-left: 20px ; 
+  padding: 10px ; 
+}
+.THIS button.available-button{
+  border: 1px solid #076FE7;
+  box-sizing: border-box; 
+  color: black ; 
+}
+.THIS .unavailable-button{
+  border: none;
+  background-color: #E5E5E5 ;
+  color: white ; 
+}
+.THIS .component-line{
+  margin-bottom: 10px ; 
+}
+
+.THIS .total-line .first-cell{
+  display: flex ; 
+  justify-content: center;  
+  align-items: center ; 
+  border: 0.5px solid black;
+}
+.THIS .plus-icon{
+  margin-right: 15px ; 
+}
+
+.THIS .project-label-container{
+  margin-left: 10px ; 
+}
+
+.THIS .background-color-gray{
+  background-color: #E5E5E5 ; 
+}
+.THIS .nested-cell.first-column{
+  cursor: pointer ; 
+  border-left : 1px solid black;
+  border-bottom : 1px solid black;
+}
+.THIS .nested-cell:not(.first-column){
+  border-left : 1px solid black;
+  border-right : 1px solid black;
+  border-bottom : 1px solid black;
+}
+.THIS .nested-cell{
+  height: 50%; 
+  width: 100% ; 
+  cursor: pointer ; 
+
+}
+.THIS .total-cell{
+  display: flex ; 
+  align-items: center ; 
+  justify-content: center ; 
+}
+.THIS .selected-cell{
+  background-color: #076FE7 ; 
+}
+
+.THIS .unavailable-cell{
+  background: linear-gradient(to top left, #fff calc(50% - 1px), #aaa, #fff calc(50% + 1px) )
+}
+
+.THIS .good-cell{
+  background-color: #45D700  ; 
+}
+.THIS .bad-cell{
+  background-color: red  ; 
+}
+.THIS .nested-cell.first-row{
+  border-top: 1px solid black; 
+}
+
+.THIS .clickable{
+  cursor: pointer ; 
+}
+
+
+
+
+.THIS .checkbox-calendar, .THIS .total-tsline-container> *{
+  display: flex ; 
+  justify-content: center ; 
+  align-items: center ; 
+}
+
+
+
+/* MEDIA COMPUTER */
+@media screen and (min-width: 768px)  {  
+
+
+  .THIS .displayMobileOnly {
+      display: none !important;
+  }
+  .THIS .timesheet-line .calendar-cell{
+    margin-bottom: 0px ; 
+  }
+  .THIS .timesheet-line > .first-cell{
+  margin-bottom: 0px ; 
+}
+}
+/* MEDIA Mobile */
+@media screen and (max-width: 767px)  { 
+
+.THIS .total-line .total-cell{
+  margin-top: 20px ; 
+}
+.THIS .displayDesktopOnly {
+    display: none !important;
+} 
+  .THIS .checkbox-container,.THIS .total-days {
+  background-color: white ; 
+  border: 1px solid #E5E5E5   ; 
+}
+.THIS .nopadding{
+  padding: 0px !important; 
+}
+.THIS .cell-padding{
+  padding: 10px ;
+}
+.THIS .bottom-margin{
+  margin-bottom: 20px ; 
+}
+}

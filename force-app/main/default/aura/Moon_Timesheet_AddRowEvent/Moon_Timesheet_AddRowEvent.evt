@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+  <aura:attribute  name="sProjectName" type="String"  />
+  <aura:attribute  name="idAssignement" type="String"  />
+</aura:event>

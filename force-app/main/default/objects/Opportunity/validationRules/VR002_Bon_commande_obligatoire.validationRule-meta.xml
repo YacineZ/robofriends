@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR002_Bon_commande_obligatoire</fullName>
+    <active>false</active>
+    <description>Si le champ bon de commande requis est a &quot;oui&quot;, le champ texte n° de bon de commande doit être rempli obligatoirement. L&#39;étape doit être à &quot;Closed won&quot;.</description>
+    <errorConditionFormula>AND(TEXT(BonCommandeRequis__c) = &#39;Oui&#39;, ISBLANK(NumeroBonCommande__c),  ISPICKVAL(StageName, &#39;Closed Won&#39;))</errorConditionFormula>
+    <errorMessage>Si le bon de commande est requis, veuillez renseigner le numéro de bon de commande.
+L&#39;étape doit être à &#39;Closed won&#39;.</errorMessage>
+</ValidationRule>

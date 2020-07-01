@@ -1,7 +1,4 @@
 public without sharing class Moon_TimesheetsContainer_LC {
-  public Moon_TimesheetsContainer_LC() {
-      
-  }
 
   @AuraEnabled 
   public static TimeSheetsDetailsWrapper getTimeSheetsDetailsWrapper() {
@@ -134,19 +131,19 @@ public without sharing class Moon_TimesheetsContainer_LC {
     @AuraEnabled
     public Map<String,List<Assignment__c>> mapInternalAssignement = new Map<String,List<Assignment__c>>() ;
 
-    public TimeSheetsDetailsWrapper(){
-      this.sCurrentWeekNumber = '44' ; 
-      this.sCurrentYear = '2019' ; 
-      this.sCurrentWeekMonday = '2019-12-27' ; 
-      this.sWeekLabel = '30 dec. to 3 jan.' ; 
-      this.lOwnersIds = new List<Id>{'0051v000004y5HJAAY'} ; 
-      this.sMode = 'CREW' ; 
-      User u = [SELECT FullPhotoUrl 
-                  FROM User 
-                  WHERE id=:Userinfo.getUserid()];
-      this.sPhotoURL = u.FullPhotoUrl;
-      this.sFullName = UserInfo.getFirstName()+' '+UserInfo.getLastName() ; 
-    }
+    //public TimeSheetsDetailsWrapper(){
+    //  this.sCurrentWeekNumber = '44' ; 
+    //  this.sCurrentYear = '2019' ; 
+    //  this.sCurrentWeekMonday = '2019-12-27' ; 
+    //  this.sWeekLabel = '30 dec. to 3 jan.' ; 
+    //  this.lOwnersIds = new List<Id>{'0051v000004y5HJAAY'} ; 
+    //  this.sMode = 'CREW' ; 
+    //  User u = [SELECT FullPhotoUrl 
+    //              FROM User 
+    //              WHERE id=:Userinfo.getUserid()];
+    //  this.sPhotoURL = u.FullPhotoUrl;
+    //  this.sFullName = UserInfo.getFirstName()+' '+UserInfo.getLastName() ; 
+    //}
 
     public TimeSheetsDetailsWrapper(Moon_TimesheetDomain oTimesheetDomain){
       this.dCurrentTSDate = oTimesheetDomain.getCurrentTSDate() ; 

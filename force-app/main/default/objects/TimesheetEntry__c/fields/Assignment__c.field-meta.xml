@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Assignment__c</fullName>
+    <description>Each Assignment must be affected to an assignment</description>
+    <externalId>false</externalId>
+    <label>Assignment</label>
+    <referenceTo>Assignment__c</referenceTo>
+    <relationshipLabel>Timesheet Entries</relationshipLabel>
+    <relationshipName>TimesheetEntries_Assignment</relationshipName>
+    <relationshipOrder>1</relationshipOrder>
+    <reparentableMasterDetail>false</reparentableMasterDetail>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackTrending>false</trackTrending>
+    <type>MasterDetail</type>
+    <writeRequiresMasterRead>false</writeRequiresMasterRead>
+</CustomField>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR01_TSE_LimiteDayCharge</fullName>
+    <active>true</active>
+    <description>A day charge cannot be upper than 0,5.</description>
+    <errorConditionFormula>(MondayAM__c &gt; 0.5) || (TuesdayAM__c &gt; 0.5) || (WednesdayAM__c &gt; 0.5) || (ThursdayAM__c &gt; 0.5) || (FridayAM__c &gt; 0.5) || (MondayPM__c &gt; 0.5) || (TuesdayPM__c &gt; 0.5) || (WednesdayPM__c &gt; 0.5) || (ThursdayPM__c &gt; 0.5) || (FridayPM__c &gt; 0.5)</errorConditionFormula>
+    <errorMessage>A day charge cannot be upper than 0,5.</errorMessage>
+</ValidationRule>

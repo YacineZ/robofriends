@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Unbilled_Revenue__c</fullName>
+    <externalId>false</externalId>
+    <label>Unbilled Revenue</label>
+    <summarizedField>Jalon__c.MontantHtPrevisionnel__c</summarizedField>
+    <summaryFilterItems>
+        <field>Jalon__c.ToBill__c</field>
+        <operation>equals</operation>
+        <value>True</value>
+    </summaryFilterItems>
+    <summaryForeignKey>Jalon__c.Projet__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

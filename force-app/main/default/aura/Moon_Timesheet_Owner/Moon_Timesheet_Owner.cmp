@@ -1,0 +1,12 @@
+<aura:component >
+  <aura:attribute  name="sFullName"  type="String" />
+  <aura:attribute  name="sPhotoURL"  type="String" />
+  <div class="ts-header_owner-Container">
+      <img class="profile-picture" style="" src="{!v.sPhotoURL}" href="Profile picture">
+      </img>
+      <span class="profile-name">
+        {!v.sFullName}
+      </span>
+  </div>
+
+</aura:component>

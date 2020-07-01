@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>VR01_TS_MondayDate</fullName>
+    <active>true</active>
+    <description>The Monday Date must be a Monday</description>
+    <errorConditionFormula>WEEKDAY( MondayDate__c ) &lt;&gt; 2</errorConditionFormula>
+    <errorDisplayField>MondayDate__c</errorDisplayField>
+    <errorMessage>The date is not a Monday.</errorMessage>
+</ValidationRule>

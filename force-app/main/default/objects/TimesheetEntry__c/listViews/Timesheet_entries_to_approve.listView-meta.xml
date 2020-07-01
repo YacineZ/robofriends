@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Timesheet_entries_to_approve</fullName>
+    <columns>NAME</columns>
+    <columns>Approver__c</columns>
+    <columns>Assignee__c</columns>
+    <columns>ProjectStage__c</columns>
+    <columns>Week_Sum__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>Status__c</field>
+        <operation>equals</operation>
+        <value>Submit For Approval</value>
+    </filters>
+    <label>Timesheet entries to approve</label>
+</ListView>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <processMetadataValues>
+            <name>emailAlertSelection</name>
+            <value>
+                <stringValue>Moon_TimesheetAssigned</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>EMAIL - Notify Assignee</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <actionName>Assignment__c.Moon_TimesheetAssigned</actionName>
+        <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myRule_1_A2</targetReference>
+        </connector>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision</name>
+        <label>myDecision</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>formula_myRule_1</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_1_A1</targetReference>
+            </connector>
+            <label>Consultant Assigned</label>
+        </rules>
+    </decisions>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>CASE(IF(ISBLANK(TEXT([Assignment__c].AssignedUser__r.Level__c)),&#39;NONE&#39;,TEXT([Assignment__c].AssignedUser__r.Level__c)), 
+&#39;Junior Consultant&#39;, $CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c ,
+&#39;Consultant confirmé&#39;, $CustomMetadata.LevelPrice__mdt.ConsultantConfirme.DailyCostPrice__c  ,
+&#39;Senior Consultant&#39;, $CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c ,
+&#39;Expert&#39;, $CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c ,
+&#39;Senior Expert&#39;, $CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c ,
+&#39;Project Manager&#39;, $CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c ,
+&#39;Senior Project Manager&#39;, $CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c ,
+&#39;Director&#39;, $CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c ,
+&#39;Senior Partner&#39;, $CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c ,
+0) </stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_2_myRule_1_A2_7136473445</name>
+        <dataType>Currency</dataType>
+        <expression>CASE(IF(ISBLANK(TEXT({!myVariable_current.AssignedUser__r.Level__c})),&#39;NONE&#39;,TEXT({!myVariable_current.AssignedUser__r.Level__c})), 
+&#39;Junior Consultant&#39;, {!$CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c} ,
+&#39;Consultant confirmé&#39;, {!$CustomMetadata.LevelPrice__mdt.ConsultantConfirme.DailyCostPrice__c}  ,
+&#39;Senior Consultant&#39;, {!$CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c} ,
+&#39;Expert&#39;, {!$CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c} ,
+&#39;Senior Expert&#39;, {!$CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c} ,
+&#39;Project Manager&#39;, {!$CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c} ,
+&#39;Senior Project Manager&#39;, {!$CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c} ,
+&#39;Director&#39;, {!$CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c} ,
+&#39;Senior Partner&#39;, {!$CustomMetadata.LevelPrice__mdt.JuniorConsultant.DailyCostPrice__c} ,
+0)</expression>
+        <scale>18</scale>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>AND(
+NOT(ISBLANK([Assignment__c].AssignedUser__c )) ,
+OR
+  ( ISNEW(),
+    ISCHANGED([Assignment__c].AssignedUser__c )
+  )
+)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_myRule_1</name>
+        <dataType>Boolean</dataType>
+        <expression>AND(
+NOT(ISBLANK({!myVariable_current.AssignedUser__c} )) ,
+OR
+  ( ISNEW(),
+    ISCHANGED({!myVariable_current.AssignedUser__c} )
+  )
+)</expression>
+    </formulas>
+    <interviewLabel>Assignment_Automation-2_InterviewLabel</interviewLabel>
+    <label>Assignment_Automation</label>
+    <processMetadataValues>
+        <name>ObjectType</name>
+        <value>
+            <stringValue>Assignment__c</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>ObjectVariable</name>
+        <value>
+            <elementReference>myVariable_current</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OldObjectVariable</name>
+        <value>
+            <elementReference>myVariable_old</elementReference>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>TriggerType</name>
+        <value>
+            <stringValue>onAllChanges</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Workflow</processType>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Assignment__c]</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_1_A2</name>
+        <label>MAJ - Initial Cost Price</label>
+        <locationX>100</locationX>
+        <locationY>300</locationY>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Currency</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Daily Cost Price</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue/>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>DailyCostPrice__c</field>
+            <value>
+                <elementReference>formula_2_myRule_1_A2_7136473445</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Assignment__c</object>
+    </recordUpdates>
+    <startElementReference>myDecision</startElementReference>
+    <status>Active</status>
+    <variables>
+        <name>myVariable_current</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+        <objectType>Assignment__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_old</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Assignment__c</objectType>
+    </variables>
+</Flow>
